@@ -4,7 +4,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="16dp">
+
+    android:paddingHorizontal="16dp"
+    android:layout_marginTop="46dp">
 
     <Button
         android:id="@+id/button"
