@@ -105,12 +105,9 @@ public class MainActivity extends AppCompatActivity {
         String currentText = buttons[index].getText().toString();
         if (currentText.isEmpty() || currentText.equals("Button")) return;
 
-        int value;
-        try {
-            value = Integer.parseInt(currentText);
-        } catch (NumberFormatException e) {
-            return;
-        }
+        int value= Integer.parseInt(currentText);
+
+
 
         if (value == sortedNumbers[nextIndex]) {
             buttons[index].setText("");

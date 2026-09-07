@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
-        android:text="Input Number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btRandom"
         app:layout_constraintStart_toEndOf="@+id/tvNumber"
