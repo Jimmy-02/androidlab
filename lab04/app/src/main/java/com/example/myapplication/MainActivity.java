@@ -12,8 +12,11 @@ import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spHobbies;
     private RadioGroup rgEnglishLevel;
     private Button btnRegister, btnCancel, btnShow;
+
+    private static final int MIN_YEAR = 1900;
 
     private static ArrayList<Employee> employeeList = new ArrayList<>();
 
@@ -59,8 +64,50 @@ public class MainActivity extends AppCompatActivity {
                 (view, y, m, d) -> {
                     String date = String.format(Locale.getDefault(), "%02d/%02d/%04d", d, m + 1, y);
                     edtDoB.setText(date);
+                    edtDoB.setError(null);
                 }, year, month, day);
+
+        Calendar minDate = Calendar.getInstance();
+        minDate.set(MIN_YEAR, Calendar.JANUARY, 1);
+        dialog.getDatePicker().setMinDate(minDate.getTimeInMillis());
+
+        //k dc chon trong tuong lai
+        dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+
         dialog.show();
+    }
+    private boolean isValidDoB(String dobStr) {
+        if (dobStr == null || dobStr.isEmpty()) {
+            return false;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        sdf.setLenient(false);
+
+        Date dobDate;
+        try {
+            dobDate = sdf.parse(dobStr);
+        } catch (ParseException e) {
+            return false;
+        }
+
+        if (dobDate == null) {
+            return false;
+        }
+
+        Calendar dobCal = Calendar.getInstance();
+        dobCal.setTime(dobDate);
+
+        Calendar today = Calendar.getInstance();
+        if (dobCal.after(today)) {
+            return false;
+        }
+
+        if (dobCal.get(Calendar.YEAR) < MIN_YEAR) {
+            return false;
+        }
+
+        return true;
     }
 
     private void registerEmployee() {
@@ -77,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (name.isEmpty() || dob.isEmpty() || englishLevel.isEmpty()) {
+            return;
+        }
+
+        if (!isValidDoB(dob)) {
             return;
         }
 

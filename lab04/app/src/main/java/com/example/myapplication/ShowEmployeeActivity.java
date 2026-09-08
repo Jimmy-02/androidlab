@@ -48,7 +48,7 @@ public class ShowEmployeeActivity extends AppCompatActivity {
                         .append("<td>").append(e.getGender()).append("</td>")
                         .append("<td>").append(e.getHobby()).append("</td>")
                         .append("<td>").append(e.getEnglishLevel()).append("</td>")
-                        .append("</tr>");
+                .append("</tr>");
             }
         }
 

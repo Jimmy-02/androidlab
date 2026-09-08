@@ -25,7 +25,8 @@ public class Employee implements Parcelable {
         hobby = in.readString();
         englishLevel = in.readString();
     }
-
+    //https://viblo.asia/p/serializable-va-parcelable-trong-android-GrLZDbe35k0
+    // dung de dung lai object employee tu du lieu trong parcel
     public static final Creator<Employee> CREATOR = new Creator<Employee>() {
         @Override
         public Employee createFromParcel(Parcel in) {
@@ -44,11 +45,13 @@ public class Employee implements Parcelable {
     public String getHobby() { return hobby; }
     public String getEnglishLevel() { return englishLevel; }
 
+    //cai nay bat buoc phai co vi quy uoc nhu v
     @Override
     public int describeContents() {
         return 0;
     }
 
+    //ghi du lieu vao parcel de chuan bi gui di
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
