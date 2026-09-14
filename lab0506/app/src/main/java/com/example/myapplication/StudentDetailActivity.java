@@ -6,9 +6,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.R;
-import com.example.studentapp.model.Student;
-
 public class StudentDetailActivity extends AppCompatActivity {
 
 

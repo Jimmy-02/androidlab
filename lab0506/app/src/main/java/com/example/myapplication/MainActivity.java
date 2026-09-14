@@ -16,8 +16,6 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.studentapp.model.Student;
-
 public class MainActivity extends AppCompatActivity {
 
     private final List<Student> studentList = new ArrayList<>();
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Thêm sinh viên")
                 .setView(dialogView)
-                .setPositiveButton("Add", null) // set null để tự override, tránh dialog tự đóng khi validate lỗi
+                .setPositiveButton("Add", null)
                 .setNegativeButton("Cancel", (d, which) -> d.dismiss())
                 .create();
 
