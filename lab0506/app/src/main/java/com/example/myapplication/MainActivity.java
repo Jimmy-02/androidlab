@@ -11,7 +11,6 @@ import android.widget.EditText;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
-import yuku.ambilwarna.AmbilWarnaDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private int studentCounter = 0;
 
     private GridLayout board;
-    private int selectedButtonColor = Color.LTGRAY;
+    private int currentButtonColor = Color.LTGRAY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,19 +99,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showColorPicker() {
-        AmbilWarnaDialog dialog = new AmbilWarnaDialog(this, selectedButtonColor,
-                new AmbilWarnaDialog.OnAmbilWarnaListener() {
-                    @Override
-                    public void onOk(AmbilWarnaDialog dialog, int color) {
-                        selectedButtonColor = color;
-                        applyColorToAllButtons(color);
-                    }
+        int[] colors = {
+                Color.parseColor("#F44336"), // đỏ
+                Color.parseColor("#FF9800"), // cam
+                Color.parseColor("#FFEB3B"), // vàng
+                Color.parseColor("#4CAF50"), // xanh lá
+                Color.parseColor("#03A9F4"), // xanh dương nhạt
+                Color.parseColor("#3F51B5"), // xanh dương đậm
+                Color.parseColor("#9C27B0"), // tím
+                Color.parseColor("#795548"), // nâu
+                Color.parseColor("#9E9E9E")  // xám
+        };
 
-                    @Override
-                    public void onCancel(AmbilWarnaDialog dialog) {
-                        // giu mau cu
-                    }
-                });
+        GridLayout colorGrid = new GridLayout(this);
+        colorGrid.setColumnCount(3);
+        colorGrid.setPadding(32, 32, 32, 32);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Chọn màu button")
+                .setView(colorGrid)
+                .setNegativeButton("Hủy", (d, which) -> d.dismiss())
+                .create();
+
+        for (int color : colors) {
+            View swatch = new View(this);
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+            params.width = 120;
+            params.height = 120;
+            params.setMargins(16, 16, 16, 16);
+            swatch.setLayoutParams(params);
+            swatch.setBackgroundColor(color);
+
+            swatch.setOnClickListener(v -> {
+                currentButtonColor = color;
+                applyColorToAllButtons();
+                dialog.dismiss();
+            });
+
+            colorGrid.addView(swatch);
+        }
+
         dialog.show();
     }
 
@@ -129,9 +155,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("extra_student", student);
         startActivity(intent);
     }
-    private void applyColorToAllButtons(int color) {
+    private void applyColorToAllButtons() {
         for (int i = 0; i < board.getChildCount(); i++) {
-            board.getChildAt(i).setBackgroundColor(color);
+            board.getChildAt(i).setBackgroundColor(currentButtonColor);
         }
     }
 }
