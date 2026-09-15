@@ -1,12 +1,27 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <GridLayout
-        android:id="@+id/color_grid"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:padding="8dp" />
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/edit_target_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID (VD: SV001)" />
+
+        <GridLayout
+            android:id="@+id/color_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:columnCount="4"
+            android:padding="8dp" />
+
+    </LinearLayout>
 
 </ScrollView>

@@ -11,7 +11,7 @@ import android.widget.EditText;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,13 +111,15 @@ public class MainActivity extends AppCompatActivity {
                 Color.parseColor("#9E9E9E")  // xám
         };
 
-        GridLayout colorGrid = new GridLayout(this);
-        colorGrid.setColumnCount(3);
-        colorGrid.setPadding(32, 32, 32, 32);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogView = inflater.inflate(R.layout.dialog_color_picker, null);
+
+        EditText edtTargetId = dialogView.findViewById(R.id.edit_target_id);
+        GridLayout colorGrid = dialogView.findViewById(R.id.color_grid);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Chọn màu button")
-                .setView(colorGrid)
+                .setView(dialogView)
                 .setNegativeButton("Hủy", (d, which) -> d.dismiss())
                 .create();
 
@@ -131,8 +133,15 @@ public class MainActivity extends AppCompatActivity {
             swatch.setBackgroundColor(color);
 
             swatch.setOnClickListener(v -> {
-                currentButtonColor = color;
-                applyColorToAllButtons();
+                String targetId = edtTargetId.getText().toString().trim();
+
+                if (targetId.isEmpty()) {
+                    currentButtonColor = color;
+                    applyColorToAllButtons();
+                } else {
+                    applyColorToSpecificButton(targetId, color);
+                }
+
                 dialog.dismiss();
             });
 
@@ -158,6 +167,19 @@ public class MainActivity extends AppCompatActivity {
     private void applyColorToAllButtons() {
         for (int i = 0; i < board.getChildCount(); i++) {
             board.getChildAt(i).setBackgroundColor(currentButtonColor);
+        }
+    }
+
+    private void applyColorToSpecificButton(String studentId, int color) {
+        for (int i = 0; i < board.getChildCount(); i++) {
+            View child = board.getChildAt(i);
+            if (child instanceof Button) {
+                Button btn = (Button) child;
+                if (btn.getText().toString().equals(studentId)) {
+                    btn.setBackgroundColor(color);
+                    return;
+                }
+            }
         }
     }
 }

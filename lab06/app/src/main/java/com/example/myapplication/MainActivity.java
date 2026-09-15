@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         txtTeacher = findViewById(R.id.txt_teacher);
         studentList = findViewById(R.id.student_list);
 
-        // Nút hamburger mở Navigation Drawer
+        //hamburger button
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
